@@ -11,9 +11,11 @@ export default function Header() {
   const { user, logout } = useUser();
 
   return (
-    <Navbar bg="light" sticky="top" className="Header">
-      <Container>
-        <Navbar.Brand>Car</Navbar.Brand>
+    <Navbar bg="dark" sticky="top" className="Header">
+      <Container fluid>
+        <Navbar.Brand>
+          <Image src={"/logo192.png"} alt="Logo" height="60" />
+        </Navbar.Brand>
         <Nav>
           {user === undefined ?
             <Spinner animation="border" />

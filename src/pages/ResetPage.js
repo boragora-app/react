@@ -6,6 +6,8 @@ import Body from '../components/Body';
 import InputField from '../components/InputField';
 import { useApi } from '../contexts/ApiProvider';
 import { useFlash } from '../contexts/FlashProvider';
+import Container from 'react-bootstrap/Container';
+
 
 export default function ResetPage() {
   const [formErrors, setFormErrors] = useState({});
@@ -55,16 +57,18 @@ export default function ResetPage() {
 
   return (
     <Body>
-      <h1>Reset Your Password</h1>
-      <Form onSubmit={onSubmit}>
-        <InputField
-          name="password" label="New Password" type="password"
-          error={formErrors.password} fieldRef={passwordField} />
-        <InputField
-          name="password2" label="New Password Again" type="password"
-          error={formErrors.password2} fieldRef={password2Field} />
-        <Button variant="primary" type="submit">Reset Password</Button>
-      </Form>
+      <Container className="Auth" >
+        <h2>Reset Your Password</h2>
+        <Form className="AuthForm" onSubmit={onSubmit}>
+          <InputField
+            name="password" label="New Password" type="password"
+            error={formErrors.password} fieldRef={passwordField} />
+          <InputField
+            name="password2" label="New Password Again" type="password"
+            error={formErrors.password2} fieldRef={password2Field} />
+          <Button variant="primary" type="submit">Reset Password</Button>
+        </Form>
+      </Container>
     </Body>
   );
 }

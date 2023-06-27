@@ -3,9 +3,10 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Body from '../components/Body';
 import InputField from '../components/InputField';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useApi } from '../contexts/ApiProvider';
 import { useFlash } from '../contexts/FlashProvider';
+import Container from 'react-bootstrap/Container';
 
 
 export default function RegistrationPage() {
@@ -35,7 +36,9 @@ export default function RegistrationPage() {
         password: passwordField.current.value
       });
       if (!data.ok) {
-        setFormErrors(data.body.errors.json);
+        // console.log(data)
+        flash(data.body.error, 'danger');
+        // setFormErrors(data.body.errors.json);
       }
       else {
         setFormErrors({});
@@ -47,22 +50,28 @@ export default function RegistrationPage() {
 
   return (
     <Body>
-      <h1>Register</h1>
-      <Form onSubmit={onSubmit}>
-        <InputField
-          name="username" label="Username"
-          error={formErrors.username} fieldRef={usernameField} />
-        <InputField
-          name="email" label="Email address"
-          error={formErrors.email} fieldRef={emailField} />
-        <InputField
-          name="password" label="Password" type="password"
-          error={formErrors.password} fieldRef={passwordField} />
-        <InputField
-          name="password2" label="Password again" type="password"
-          error={formErrors.password2} fieldRef={password2Field} />
-        <Button variant="primary" type="submit">Register</Button>
-      </Form>
+      <Container className="Auth" >
+        <h1>Register</h1>
+        <Form className="AuthForm" onSubmit={onSubmit}>
+          <InputField
+            name="username" label="Username"
+            error={formErrors.username} fieldRef={usernameField} />
+          <InputField
+            name="email" label="Email address"
+            error={formErrors.email} fieldRef={emailField} />
+          <InputField
+            name="password" label="Password" type="password"
+            error={formErrors.password} fieldRef={passwordField} />
+          <InputField
+            name="password2" label="Password again" type="password"
+            error={formErrors.password2} fieldRef={password2Field} />
+          <Button variant="primary" type="submit">Register</Button>
+        </Form>
+        <hr />
+        <p>Do have an account? <Link to="/login">Login here</Link>.</p>
+        
+        <p>Forgot your password? You can <Link to="/reset-request">reset it</Link>!</p>
+      </Container>
     </Body>
   );
 }

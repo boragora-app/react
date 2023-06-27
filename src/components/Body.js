@@ -6,7 +6,7 @@ import FlashMessage from './FlashMessage';
 
 export default function Body({ sidebar, children }) {
   return (
-    <Container>
+    <>
       <Stack direction="horizontal" className="Body">
         {sidebar && <Sidebar />}
         <Container className="Content">
@@ -14,6 +14,6 @@ export default function Body({ sidebar, children }) {
           {children}
         </Container>
       </Stack>
-    </Container>
+    </>
   );
 }

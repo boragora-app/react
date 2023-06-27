@@ -21,7 +21,7 @@ export default function EditUserPage() {
   useEffect(() => {
     usernameField.current.value = user.username;
     emailField.current.value = user.email;
-    aboutMeField.current.value = user.about_me;
+    aboutMeField.current.value = user.about;
     usernameField.current.focus();
   }, [user]);
 
@@ -30,7 +30,7 @@ export default function EditUserPage() {
     const response = await api.put('/me', {
       username: usernameField.current.value,
       email: emailField.current.value,
-      about_me: aboutMeField.current.value,
+      about: aboutMeField.current.value,
     });
     if (response.ok) {
       setFormErrors({});
@@ -54,7 +54,7 @@ export default function EditUserPage() {
           error={formErrors.email} fieldRef={emailField} />
         <InputField
           name="aboutMe" label="About Me"
-          error={formErrors.about_me} fieldRef={aboutMeField} />
+          error={formErrors.about} fieldRef={aboutMeField} />
         <Button variant="primary" type="submit">Save</Button>
       </Form>
     </Body>

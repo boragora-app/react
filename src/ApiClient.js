@@ -1,9 +1,7 @@
-const BASE_API_URL = process.env.REACT_APP_BASE_API_URL;
-
 export default class ApiClient {
   constructor(onError) {
     this.onError = onError;
-    this.base_url =  BASE_API_URL + '/api';
+    this.base_url = process.env.REACT_APP_BASE_API_URL;
   }
 
   async request(options) {

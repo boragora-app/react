@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import { useApi } from '../contexts/ApiProvider';
-import Post from './Post';
+import Repair from './Repair';
 import More from './More';
 import Write from './Write';
 
-export default function Posts({ content, write }) {
-  const [posts, setPosts] = useState();
+export default function Repairs({ content, write }) {
+  const [repairs, setRepairs] = useState();
   const [pagination, setPagination] = useState();
   const api = useApi();
 
@@ -17,59 +17,55 @@ export default function Posts({ content, write }) {
       url = '/feed';
       break;
     case 'explore':
-      url = '/posts';
+      url = '/repairs';
       break
     default:
-      url = `/users/${content}/posts`;
+      url = `/car/${content}/repairs`;
       break;
   }
 
   useEffect(() => {
     (async () => {
-      const response = await api.get(url);
+      const response = await api.get(url, {after: '99999999999'});
       if (response.ok) {
-
-        console.log(response.body)
-
-        setPosts(response.body.data);
+        setRepairs(response.body.data.splice(-5));
         setPagination(response.body.pagination);
       }
       else {
-        setPosts(null);
+        setRepairs(null);
       }
     })();
   }, [api, url]);
 
   const loadNextPage = async () => {
     const response = await api.get(url, {
-      after: posts[posts.length - 1].timestamp
+      after: repairs[repairs.length - 1].timestamp
     });
     if (response.ok) {
-      setPosts([...posts, ...response.body.data]);
+      setRepairs([...repairs, ...response.body.data]);
       setPagination(response.body.pagination);
     }
   };
 
-
-  const showPost = (newPost) => {
-    setPosts([newPost, ...posts]);
+  const showRepair = (newRepair) => {
+    setRepairs([newRepair, ...repairs]);
   };
 
   return (
     <>
-      {write && <Write showPost={showPost} />}
-      {posts === undefined ?
+      {write && <Write showRepair={showRepair} />}
+      {repairs === undefined ?
         <Spinner animation="border" />
       :
         <>
-          {posts === null ?
-             <p>Não foi possível buscar os posts.</p>
+          {repairs === null ?
+             <p>Não foi possível buscar as manutenções.</p>
           :
             <>
-              {posts.length === 0 ?
-                <p>Nenhum posts.</p>
+              {repairs.length === 0 ?
+                <p>Sem manutenções cadastradas.</p>
               :
-                posts.map(post => <Post key={post.id} post={post} />)
+                repairs.map(repair => <Repair key={repair.id} repair={repair} />)
               }
               <More pagination={pagination} loadNextPage={loadNextPage} />
             </>

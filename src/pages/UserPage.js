@@ -56,7 +56,7 @@ export default function UserPage() {
     if (response.ok) {
       flash(
         <>
-          You are now following <b>{user.username}</b>.
+          Agora você está seguindo <b>{user.username}</b>.
         </>, 'success'
       );
       setIsFollower(true);
@@ -68,7 +68,7 @@ export default function UserPage() {
     if (response.ok) {
       flash(
         <>
-          You have unfollowed <b>{user.username}</b>.
+          Você deixou de seguir <b>{user.username}</b>.
         </>, 'success'
       );
       setIsFollower(false);
@@ -82,33 +82,33 @@ export default function UserPage() {
       :
         <>
           {user === null ?
-            <p>User not found.</p>
+            <p>Usuário não encontrado.</p>
           :
             <>
               <Stack direction="horizontal" gap={4}>
                 <Image src={user.avatar_url + '&s=128'} roundedCircle />
                 <div>
                   <h1>{user.username}</h1>
-                  {user.about_me && <h5>{user.about_me}</h5>}
+                  {user.about && <h5>{user.about}</h5>}
                   <p>
-                    Member since: <TimeAgo isoDate={user.first_seen} />
+                    Membro desde: <TimeAgo isoDate={user.first_seen} />
                     <br />
-                    Last seen: <TimeAgo isoDate={user.last_seen} />
+                    Visto por último: <TimeAgo isoDate={user.last_seen} />
                   </p>
 
                   {isFollower === null &&
                     <Button variant="primary" onClick={edit}>
-                      Edit
+                      Editar
                     </Button>
                   }
                   {isFollower === false &&
                     <Button variant="primary" onClick={follow}>
-                      Follow
+                      Seguir
                     </Button>
                   }
                   {isFollower === true &&
                     <Button variant="primary" onClick={unfollow}>
-                      Unfollow
+                      Deixar de seguir
                     </Button>
                   }
                 </div>

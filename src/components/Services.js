@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import { useApi } from '../contexts/ApiProvider';
-import Post from './Post';
+import Service from './Service';
 import More from './More';
 import Write from './Write';
 
-export default function Posts({ content, write }) {
-  const [posts, setPosts] = useState();
+export default function Services({ content, write }) {
+  const [services, setServices] = useState();
   const [pagination, setPagination] = useState();
   const api = useApi();
 
@@ -17,10 +17,10 @@ export default function Posts({ content, write }) {
       url = '/feed';
       break;
     case 'explore':
-      url = '/posts';
+      url = '/services';
       break
     default:
-      url = `/users/${content}/posts`;
+      url = `/users/${content}/services`;
       break;
   }
 
@@ -28,48 +28,45 @@ export default function Posts({ content, write }) {
     (async () => {
       const response = await api.get(url);
       if (response.ok) {
-
-        console.log(response.body)
-
-        setPosts(response.body.data);
+        setServices(response.body.data);
         setPagination(response.body.pagination);
       }
       else {
-        setPosts(null);
+        setServices(null);
       }
     })();
   }, [api, url]);
 
   const loadNextPage = async () => {
     const response = await api.get(url, {
-      after: posts[posts.length - 1].timestamp
+      after: services[services.length - 1].timestamp
     });
     if (response.ok) {
-      setPosts([...posts, ...response.body.data]);
+      setServices([...services, ...response.body.data]);
       setPagination(response.body.pagination);
     }
   };
 
 
-  const showPost = (newPost) => {
-    setPosts([newPost, ...posts]);
+  const showService = (newService) => {
+    setServices([newService, ...services]);
   };
 
   return (
     <>
-      {write && <Write showPost={showPost} />}
-      {posts === undefined ?
+      {write && <Write showService={showService} />}
+      {services === undefined ?
         <Spinner animation="border" />
       :
         <>
-          {posts === null ?
-             <p>Não foi possível buscar os posts.</p>
+          {services === null ?
+             <p>Could not retrieve blog services.</p>
           :
             <>
-              {posts.length === 0 ?
-                <p>Nenhum posts.</p>
+              {services.length === 0 ?
+                <p>There are no blog services.</p>
               :
-                posts.map(post => <Post key={post.id} post={post} />)
+                services.map(service => <Service key={service.id} service={service} />)
               }
               <More pagination={pagination} loadNextPage={loadNextPage} />
             </>

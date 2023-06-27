@@ -2,8 +2,13 @@ import Container from 'react-bootstrap/Container';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ApiProvider from './contexts/ApiProvider';
 import Header from './components/Header';
-import FeedPage from './pages/FeedPage';
 import ExplorePage from './pages/ExplorePage';
+import FeedPage from './pages/FeedPage';
+
+import ListCarPage from './pages/ListCarPage';
+import CarPage from './pages/CarPage';
+import RepairPage from './pages/RepairPage';
+
 import UserPage from './pages/UserPage';
 import LoginPage from './pages/LoginPage';
 import RegistrationPage from './pages/RegistrationPage';
@@ -41,12 +46,16 @@ export default function App() {
                 <Route path="*" element={
                   <PrivateRoute>
                     <Routes>
-                      <Route path="/" element={<FeedPage />} />
+                      {/* <Route path="/" element={<FeedPage />} /> */}
+                      <Route path="/cars" element={<ListCarPage />} />
+                      <Route path="/car/:carid" element={<CarPage />} />
+                      <Route path="/repair/:repairid" element={<RepairPage />} />
+                      <Route path="/feed" element={<FeedPage />} />
                       <Route path="/explore" element={<ExplorePage />} />
                       <Route path="/user/:username" element={<UserPage />} />
                       <Route path="/edit" element={<EditUserPage />} />
                       <Route path="/password" element={<ChangePasswordPage />} />
-                      <Route path="*" element={<Navigate to="/" />} />
+                      <Route path="*" element={<Navigate to="/cars" />} />
                     </Routes>
                   </PrivateRoute>
                 } />

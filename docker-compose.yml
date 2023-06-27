@@ -1,0 +1,22 @@
+version: '3'
+services:
+  react:
+    build: react
+    image: bag-react
+    ports:
+      - "3000:3000"
+    env_file: api/.env
+    volumes:
+      - ./react:/app
+    restart: unless-stopped
+  api:
+    build: api
+    image: bag-api
+    ports:
+      - "5000:5000"
+    env_file: api/.env
+    volumes:
+      - ./api/data:/data
+    environment:
+      DATABASE_URL: sqlite:////data/db.sqlite
+    restart: unless-stopped

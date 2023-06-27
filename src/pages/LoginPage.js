@@ -6,7 +6,7 @@ import Body from '../components/Body';
 import InputField from '../components/InputField';
 import { useUser } from '../contexts/UserProvider';
 import { useFlash } from '../contexts/FlashProvider';
-
+import Container from 'react-bootstrap/Container';
 
 export default function LoginPage() {
   const [formErrors, setFormErrors] = useState({});
@@ -50,21 +50,24 @@ export default function LoginPage() {
     }
   };
 
+
   return (
-    <Body>
-      <h1>Login</h1>
-      <Form onSubmit={onSubmit}>
-        <InputField
-          name="username" label="Username or email address"
-          error={formErrors.username} fieldRef={usernameField} />
-        <InputField
-          name="password" label="Password" type="password"
-          error={formErrors.password} fieldRef={passwordField} />
-        <Button variant="primary" type="submit">Login</Button>
-      </Form>
-      <hr />
-      <p>Forgot your password? You can <Link to="/reset-request">reset it</Link>.</p>
-      <p>Don&apos;t have an account? <Link to="/register">Register here</Link>!</p>
+    <Body >
+      <Container className="Auth" >
+        <h1>Login</h1>
+        <Form className="AuthForm" onSubmit={onSubmit}>
+          <InputField
+            name="username" label="Username or email address"
+            error={formErrors.username} fieldRef={usernameField} />
+          <InputField
+            name="password" label="Password" type="password"
+            error={formErrors.password} fieldRef={passwordField} />
+          <Button variant="primary" type="submit">Login</Button>
+        </Form>
+        <hr />
+        <p>Forgot your password? You can <Link to="/reset-request">reset it</Link>.</p>
+        <p>Don&apos;t have an account? <Link to="/register">Register here</Link>!</p>
+      </Container>
     </Body>
   );
 }

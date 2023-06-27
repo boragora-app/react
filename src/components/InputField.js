@@ -1,17 +1,25 @@
 import Form from 'react-bootstrap/Form';
-
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
 export default function InputField(
-  { name, label, type, placeholder, error, fieldRef }
+  { name, label, type, error, fieldRef }
 ) {
   return (
-    <Form.Group controlId={name} className="InputField">
-      {label && <Form.Label>{label}</Form.Label>}
-      <Form.Control
-        type={type || 'text'}
-        placeholder={placeholder}
-        ref={fieldRef}
-      />
+    <FloatingLabel
+      controlId={name}
+      label={label}
+      className="mb-2"
+    >
+      <Form.Control type={type || 'text'} placeholder='' ref={fieldRef} />
       <Form.Text className="text-danger">{error}</Form.Text>
-    </Form.Group>
+    </FloatingLabel>
+
+    // <Form.Group  className="InputField">
+    //   
+    //   <Form.Control
+    //     type={type || 'text'}
+    //     
+    //     
+    //   />
+    // </Form.Group>
   );
 }

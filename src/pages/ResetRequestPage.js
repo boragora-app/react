@@ -5,6 +5,9 @@ import Body from '../components/Body';
 import InputField from '../components/InputField';
 import { useApi } from '../contexts/ApiProvider';
 import { useFlash } from '../contexts/FlashProvider';
+import Container from 'react-bootstrap/Container';
+import { Link } from 'react-router-dom';
+
 
 export default function ResetRequestPage() {
   const [formErrors, setFormErrors] = useState({});
@@ -36,13 +39,18 @@ export default function ResetRequestPage() {
 
   return (
     <Body>
-      <h1>Reset Your Password</h1>
-      <Form onSubmit={onSubmit}>
-        <InputField
-          name="email" label="Email Address"
-          error={formErrors.email} fieldRef={emailField} />
-        <Button variant="primary" type="submit">Reset Password</Button>
-      </Form>
+      <Container className="Auth" >
+        <h2>Reset Your Password</h2>
+        <Form className="AuthForm" onSubmit={onSubmit}>
+          <InputField
+            name="email" label="Email Address"
+            error={formErrors.email} fieldRef={emailField} />
+          <Button variant="primary" type="submit">Reset Password</Button>
+        </Form>
+        <hr />
+        <p>Do have an account? <Link to="/login">Login here</Link>.</p>
+        <p>Don&apos;t have an account? <Link to="/register">Register here</Link>!</p>
+      </Container>
     </Body>
   );
 }
