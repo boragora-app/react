@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import TimeAgo from '../components/TimeAgo';
 import Repairs from '../components/Repairs';
+import BackButton from '../components/BackButton';
 import { useApi } from '../contexts/ApiProvider';
 import InputField from '../components/InputField';
 import Container from 'react-bootstrap/Container';
@@ -141,6 +142,7 @@ export default function CarPage() {
 
   return (
     <Body sidebar>
+
       {car === undefined ?
         <Spinner animation="border" />
       :
@@ -149,7 +151,7 @@ export default function CarPage() {
               <p>Carro não encontrado.</p>
             :   
               <>
-                <h2>{car.brand} - {car.model} {car.year} | Manutenções</h2>
+                <h2>Manutenções | {car.brand} - {car.model} {car.year}</h2>
                 {car.last_seen && 
                   <p>
                     Última manutenção: <TimeAgo isoDate={car.last_seen * 1000} />
@@ -159,6 +161,8 @@ export default function CarPage() {
                     Próxima manutenção: <TimeAgo isoDate={car.next_seen * 1000} />
                   </p>}
                   <hr style={{ backgroundColor: 'black', height: '3px', width: '100%' }} />
+                <BackButton />
+
                 {/* {isFollower === null &&
                   <Button variant="primary" onClick={edit}>
                     Edit

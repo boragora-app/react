@@ -4,7 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Spinner from 'react-bootstrap/Spinner';
 import Body from '../components/Body';
 import TimeAgo from '../components/TimeAgo';
-import Repairs from '../components/Repairs';
+import BackButton from '../components/BackButton';
+
 import { useApi } from '../contexts/ApiProvider';
 // import { useNavigate } from 'react-router-dom';
 // import { useUser } from '../contexts/UserProvider';
@@ -83,8 +84,12 @@ export default function RepairPage() {
             <p>Manutenção não encontrada.</p>
           :
             <Container className="RepairCar">
-                {repair.carname && <h2>{repair.carname} | {repair.mileage} Km</h2>}
-                <h3>{repair.name} - <TimeAgo isoDate={repair.timestamp} /></h3>
+                <h2>{repair.carname} | {repair.mileage} Km</h2>
+
+                <hr style={{ backgroundColor: 'black', height: '3px', width: '100%' }} />
+
+                <BackButton />
+                <h3 style={{ margin: '40px 0px 20px' }}>{repair.name} - <TimeAgo isoDate={repair.timestamp} /></h3>
                 <h5>
                   {repair.desc}
                 </h5>

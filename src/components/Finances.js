@@ -5,7 +5,6 @@ import Car from './Car';
 import More from './More';
 import InputField from '../components/InputField';
 
-
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -214,7 +213,7 @@ export default function Cars({ content, write }) {
               error={formErrors.value} fieldRef={valueField} />
             </Form.Group>
             <Form.Group style={{ textAlign: "center", margin: "20px" }}  sm={12} as={Col}>
-              <Button variant="outline-success" type="submit">Cadastrar Veículo</Button>
+              <Button variant="primary" type="submit">Cadastrar Veículo</Button>
             </Form.Group>
           </Row>
         </Form>

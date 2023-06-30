@@ -6,6 +6,7 @@ import ExplorePage from './pages/ExplorePage';
 import FeedPage from './pages/FeedPage';
 
 import ListCarPage from './pages/ListCarPage';
+// import FinancePage from './pages/FinancePage';
 import CarPage from './pages/CarPage';
 import RepairPage from './pages/RepairPage';
 
@@ -48,6 +49,7 @@ export default function App() {
                     <Routes>
                       {/* <Route path="/" element={<FeedPage />} /> */}
                       <Route path="/cars" element={<ListCarPage />} />
+                      {/* <Route path="/finance" element={<FinancePage />} /> */}
                       <Route path="/car/:carid" element={<CarPage />} />
                       <Route path="/repair/:repairid" element={<RepairPage />} />
                       <Route path="/feed" element={<FeedPage />} />

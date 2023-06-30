@@ -10,8 +10,8 @@ export default function More({ pagination, loadNextPage }) {
   return (
     <div className="More">
       {thereAreMore &&
-        <Button variant="outline-primary" onClick={loadNextPage}>
-          More &raquo;
+        <Button size="sm" variant="outline-primary" onClick={loadNextPage}>
+          Mais &raquo;
         </Button>
       }
     </div>

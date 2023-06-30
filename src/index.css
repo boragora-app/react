@@ -66,10 +66,16 @@ a:hover {
   /* height: 95vh; */
 }
 
-.Car, .Post {
+.Post {
   align-items: start;
   padding-top: 5px;
   border-bottom: 1px solid #eee;
+}
+.Car {
+  align-items: center;
+  padding-top: 5px;
+  border-bottom: 1px solid #eee;
+  justify-content: space-between;
 }
 
 .Car:hover, .Post:hover {
@@ -99,7 +105,6 @@ a:hover {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 90vh;
 }
 
 .FormNew {
@@ -147,6 +152,13 @@ a:hover {
   border-radius: 16px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   max-width: 440px;
+}
+
+.AuthContent {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .AuthForm {

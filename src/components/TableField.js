@@ -1,5 +1,7 @@
 import Form from 'react-bootstrap/Form';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Table from 'react-bootstrap/Table';
+
+
 export default function InputField(
   { name, label, type, error, fieldRef }
 ) {
