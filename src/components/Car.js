@@ -18,7 +18,7 @@ export default memo(function Car({ car, editCar }) {
             <>
               {car.brand} {car.model} {car.year} | R$ {car.cost}
               &nbsp;&mdash;&nbsp;
-              {car.mileage}
+              {car.mileage/1000} Mil km
             </>
             <p>{car.next_service}</p>
           </Link>

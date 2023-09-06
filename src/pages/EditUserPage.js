@@ -19,7 +19,7 @@ export default function EditUserPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    usernameField.current.value = user.username;
+    usernameField.current.value = user.name;
     emailField.current.value = user.email;
     aboutMeField.current.value = user.about;
     usernameField.current.focus();
@@ -28,7 +28,7 @@ export default function EditUserPage() {
   const onSubmit = async (event) => {
     event.preventDefault();
     const response = await api.put('/me', {
-      username: usernameField.current.value,
+      name: usernameField.current.value,
       email: emailField.current.value,
       about: aboutMeField.current.value,
     });
@@ -36,7 +36,7 @@ export default function EditUserPage() {
       setFormErrors({});
       setUser(response.body);
       flash('Your profile has been updated.', 'success');
-      navigate('/user/' + response.body.username);
+      navigate('/user/' + response.body.name);
     }
     else {
       setFormErrors(response.body.errors.json);

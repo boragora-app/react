@@ -34,7 +34,7 @@ test('logs user in', async () => {
       return {
         status: 200,
         ok: true,
-        json: () => Promise.resolve({username: 'susan'}),
+        json: () => Promise.resolve({name: 'susan'}),
       };
     });
 
@@ -43,7 +43,7 @@ test('logs user in', async () => {
     useEffect(() => {
       (async () => await login('username', 'password'))();
     }, []);
-    return user ? <p>{user.username}</p> : null;
+    return user ? <p>{user.name}</p> : null;
   };
 
   render(
@@ -113,7 +113,7 @@ test('logs user in with bad credentials', async () => {
         return {
           status: 200,
           ok: true,
-          json: () => Promise.resolve({username: 'susan'}),
+          json: () => Promise.resolve({name: 'susan'}),
         };
       })
       .mockImplementationOnce((url) => {
@@ -129,7 +129,7 @@ test('logs user in with bad credentials', async () => {
       if (user) {
         return (
           <>
-            <p>{user.username}</p>
+            <p>{user.name}</p>
             <button onClick={logout}>logout</button>
           </>
         );

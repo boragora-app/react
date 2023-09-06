@@ -18,7 +18,7 @@ spec:
         fsGroup: 359
       containers:
         - name: react
-          image: registry.rcaldas.com/boragora/bag-react:0.0.2
+          image: registry.rcaldas.com/boragora/react:0.0.5
           imagePullPolicy: Always
           command: ["npm", "start"]
           ports:

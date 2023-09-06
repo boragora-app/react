@@ -31,7 +31,7 @@ export default function RegistrationPage() {
     }
     else {
       const data = await api.post('/users', {
-        username: usernameField.current.value,
+        name: usernameField.current.value,
         email: emailField.current.value,
         password: passwordField.current.value
       });

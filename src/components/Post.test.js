@@ -6,7 +6,7 @@ test('it renders all the components of the post', () => {
   const timestampUTC = '2020-01-01T00:00:00.000Z';
   const post = {
     text: 'hello',
-    author: {username: 'susan', avatar_url: 'https://example.com/avatar/susan'},
+    author: {name: 'susan', avatar_url: 'https://example.com/avatar/susan'},
     timestamp: timestampUTC,
   };
 

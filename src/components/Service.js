@@ -8,11 +8,11 @@ export default memo(function Service({ service }) {
   return (
     <Stack direction="horizontal" gap={3} className="Service">
       <Image src={service.author.avatar_url + '&s=48'}
-             alt={service.author.username} roundedCircle />
+             alt={service.author.name} roundedCircle />
       <div>
         <p>
-          <Link to={'/user/' + service.author.username}>
-            {service.author.username}
+          <Link to={'/user/' + service.author.name}>
+            {service.author.name}
           </Link>
           &nbsp;&mdash;&nbsp;
           <TimeAgo isoDate={service.timestamp} />:

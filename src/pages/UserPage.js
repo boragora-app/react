@@ -27,7 +27,7 @@ export default function UserPage() {
       const response = await api.get('/users/' + username);
       if (response.ok) {
         setUser(response.body);
-        if (response.body.username !== loggedInUser.username) {
+        if (response.body.name !== loggedInUser.name) {
           const follower = await api.get(
             '/me/following/' + response.body.id);
           if (follower.status === 204) {
@@ -56,7 +56,7 @@ export default function UserPage() {
     if (response.ok) {
       flash(
         <>
-          Agora você está seguindo <b>{user.username}</b>.
+          Agora você está seguindo <b>{user.name}</b>.
         </>, 'success'
       );
       setIsFollower(true);
@@ -68,7 +68,7 @@ export default function UserPage() {
     if (response.ok) {
       flash(
         <>
-          Você deixou de seguir <b>{user.username}</b>.
+          Você deixou de seguir <b>{user.name}</b>.
         </>, 'success'
       );
       setIsFollower(false);
@@ -88,7 +88,7 @@ export default function UserPage() {
               <Stack direction="horizontal" gap={4}>
                 <Image src={user.avatar_url + '&s=128'} roundedCircle />
                 <div>
-                  <h1>{user.username}</h1>
+                  <h1>{user.name}</h1>
                   {user.about && <h5>{user.about}</h5>}
                   <p>
                     Membro desde: <TimeAgo isoDate={user.first_seen} />

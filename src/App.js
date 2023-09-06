@@ -5,6 +5,7 @@ import Header from './components/Header';
 import ExplorePage from './pages/ExplorePage';
 import FeedPage from './pages/FeedPage';
 
+import BookingPage from './pages/BookingPage';
 import ListCarPage from './pages/ListCarPage';
 // import FinancePage from './pages/FinancePage';
 import CarPage from './pages/CarPage';
@@ -48,6 +49,7 @@ export default function App() {
                   <PrivateRoute>
                     <Routes>
                       {/* <Route path="/" element={<FeedPage />} /> */}
+                      <Route path="/booking" element={<BookingPage />} />
                       <Route path="/cars" element={<ListCarPage />} />
                       {/* <Route path="/finance" element={<FinancePage />} /> */}
                       <Route path="/car/:carid" element={<CarPage />} />

@@ -3,7 +3,10 @@ FROM node:19
 WORKDIR /app
 COPY package*.json .
 RUN npm install
-# RUN npm run build
+
+COPY public public
+COPY src src
+RUN npm run build
 
 EXPOSE 3000
 CMD npm start

@@ -8,11 +8,11 @@ export default memo(function Post({ post }) {
   return (
     <Stack direction="horizontal" gap={3} className="Post">
       <Image src={post.author.avatar_url + '&s=48'}
-             alt={post.author.username} roundedCircle />
+             alt={post.author.name} roundedCircle />
       <div>
         <p>
-          <Link to={'/user/' + post.author.username}>
-            {post.author.username}
+          <Link to={'/user/' + post.author.name}>
+            {post.author.name}
           </Link>
           &nbsp;&mdash;&nbsp;
           <TimeAgo isoDate={post.timestamp} />:

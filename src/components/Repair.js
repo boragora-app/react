@@ -16,6 +16,7 @@ export default memo(function Repair({ repair }) {
           <TimeAgo isoDate={repair.timestamp} />:
         </p>
         <p>{repair.desc}</p>
+        <p>R${repair.value} | {repair.user}</p>
       </div>
     </Stack>
   );
