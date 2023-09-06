@@ -44,9 +44,9 @@ spec:
       volumes:
         - name: src
           hostPath:
-            path: /var/dev/boragora/bag-react/src
+            path: /var/dev/boragora/react/src
         - name: public
           hostPath:
-            path: /var/dev/boragora/bag-react/public
+            path: /var/dev/boragora/react/public
       nodeSelector:
-        kubernetes.io/hostname: bg
+        kubernetes.io/hostname: dm1
