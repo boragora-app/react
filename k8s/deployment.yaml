@@ -32,10 +32,7 @@ spec:
               cpu: "500m"
           envFrom:
             - configMapRef:
-                name: bag
-          env:
-            - name: REACT_APP_BASE_API_URL
-              value: https://react.boragora.app/api
+                name: boragora
           volumeMounts:
             - name: src
               mountPath: /app/src
@@ -49,4 +46,18 @@ spec:
           hostPath:
             path: /var/dev/boragora/react/public
       nodeSelector:
-        kubernetes.io/hostname: dm1
+        kubernetes.io/hostname: dev
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bag-react
+  namespace: dev
+spec:
+  selector:
+    app: bag-react
+  ports:
+    - port: 3000
+      nodePort: 30067
+  type: NodePort
+  externalTrafficPolicy: Local
