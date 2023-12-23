@@ -2,21 +2,40 @@ version: '3'
 services:
   react:
     build: react
-    image: bag-react
-    ports:
-      - "3000:3000"
-    env_file: api/.env
+    # ports:
+    #   - "3000:3000"
+    env_file: .env
     volumes:
-      - ./react:/app
+      - ./react/public:/app/public
+      - ./react/src:/app/src
     restart: unless-stopped
   api:
     build: api
-    image: bag-api
-    ports:
-      - "5000:5000"
-    env_file: api/.env
+    # ports:
+    #   - "5000:5000"
+    env_file: .env
     volumes:
-      - ./api/data:/data
-    environment:
-      DATABASE_URL: sqlite:////data/db.sqlite
+      - ./api/app:/flask/app
     restart: unless-stopped
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - ./db:/data/db
+      # - ${DIR}./bkp:/dump
+    # ports:
+    #   - 27017:27017
+  nginx:
+    image: nginx:latest
+    ports:
+      - 8080:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - react
+      - api
