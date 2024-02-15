@@ -5,7 +5,6 @@ import Car from './Car';
 import More from './More';
 import InputField from '../components/InputField';
 
-
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -18,6 +17,7 @@ export default function Cars({ content, write }) {
   const [car, setCar] = useState();
   const [pagination, setPagination] = useState();
   const [formErrors, setFormErrors] = useState({});
+  const [action, setAction] = useState(['Novo', 'outline-success', 'Cadastrar Veículo']);
   const api = useApi();
   const caridField = useRef();
   const licenseField = useRef();
@@ -54,6 +54,7 @@ export default function Cars({ content, write }) {
     } else {
       caridField.current.value = c.id
     }
+    setAction(['Editar', 'outline-warning', 'Editar Veículo', 'true'])
     licenseField.current.value = c.license || ""
     brandField.current.value = c.brand || ""
     modelField.current.value = c.model || ""
@@ -61,9 +62,6 @@ export default function Cars({ content, write }) {
     colorField.current.value = c.color || ""
     mileageField.current.value = c.mileage || ""
     valueField.current.value = c.value || ""
-
-    console.log('alterar variant do botão do form newcar para amarelo e texto Editar Veículo')
-
   };
 
   const checkCarForm = () => {
@@ -98,6 +96,19 @@ export default function Cars({ content, write }) {
     return true
   }
 
+  function handleCancel() {
+    setAction(['Novo', 'outline-success', 'Cadastrar Veículo'])
+    caridField.current.value = '';
+    licenseField.current.value = '';
+    brandField.current.value = '';
+    modelField.current.value = '';
+    yearField.current.value = '';
+    colorField.current.value = '';
+    mileageField.current.value = '';
+    valueField.current.value = '';
+    brandField.current.focus();
+  }
+
   const onSubmit = async (event) => {
     event.preventDefault();
     if (checkCarForm) {
@@ -113,7 +124,7 @@ export default function Cars({ content, write }) {
           'value': valueField.current.value,
         }
         setCar(carset)
-        const data = await api.post('/car', carset);
+        const data = await api.post('/car', car);
   
         if (!data.ok) {
           flash(data.body.error, 'danger');
@@ -123,26 +134,13 @@ export default function Cars({ content, write }) {
           if (! caridField.current.value) {
             showCar(data.body);
           }
-  
-          caridField.current.value = '';
-          licenseField.current.value = '';
-          brandField.current.value = '';
-          modelField.current.value = '';
-          yearField.current.value = '';
-          colorField.current.value = '';
-          mileageField.current.value = '';
-          valueField.current.value = '';
-          brandField.current.focus();
-
-          console.log('alterar variant do botão do form newcar para primary e texto Criar Veículo')
-
+          handleCancel();
         }
       } catch (error) {
         console.log(error);
       }
     }
   };
-  
 
   useEffect(() => {
     (async () => {
@@ -159,7 +157,7 @@ export default function Cars({ content, write }) {
 
   const loadNextPage = async () => {
     const response = await api.get(url, {
-      after: cars[cars.length - 1].cost
+      offset: cars.length
     });
     if (response.ok) {
       setCars([...cars, ...response.body.data]);
@@ -171,7 +169,7 @@ export default function Cars({ content, write }) {
     <>
       <Container className="ListCar">
         <Form className="FormNew" onSubmit={onSubmit}> 
-          <h3>Novo</h3>
+          <h3>{action[0]}</h3>
           <Row className="mb-3">
             <InputField
               name="id" label="ID" type="hidden"
@@ -214,7 +212,9 @@ export default function Cars({ content, write }) {
               error={formErrors.value} fieldRef={valueField} />
             </Form.Group>
             <Form.Group style={{ textAlign: "center", margin: "20px" }}  sm={12} as={Col}>
-              <Button variant="outline-success" type="submit">Cadastrar Veículo</Button>
+              <Button variant={action[1]} type="submit">{action[2]}</Button>
+              {" "}
+              {action[3] && <Button type="button" variant="outline-danger" onClick={handleCancel}>Cancelar</Button>}
             </Form.Group>
           </Row>
         </Form>
