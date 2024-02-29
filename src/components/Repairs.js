@@ -5,7 +5,7 @@ import Repair from './Repair';
 import More from './More';
 import Write from './Write';
 
-export default function Repairs({ content, write }) {
+export default function Repairs({ content, mileage, write }) {
   const [repairs, setRepairs] = useState();
   const [pagination, setPagination] = useState();
   const api = useApi();
@@ -26,7 +26,7 @@ export default function Repairs({ content, write }) {
 
   useEffect(() => {
     (async () => {
-      const response = await api.get(url, {after: '99999999999'});
+      const response = await api.get(url, {});
       if (response.ok) {
         setRepairs(response.body.data.splice(-5));
         setPagination(response.body.pagination);
@@ -39,7 +39,7 @@ export default function Repairs({ content, write }) {
 
   const loadNextPage = async () => {
     const response = await api.get(url, {
-      after: repairs[repairs.length - 1].timestamp
+      offset: repairs.length
     });
     if (response.ok) {
       setRepairs([...repairs, ...response.body.data]);
@@ -65,7 +65,7 @@ export default function Repairs({ content, write }) {
               {repairs.length === 0 ?
                 <p>Sem manutenções cadastradas.</p>
               :
-                repairs.map(repair => <Repair key={repair.id} repair={repair} />)
+                repairs.map(repair => <Repair key={repair.id} repair={repair} mileage={mileage} />)
               }
               <More pagination={pagination} loadNextPage={loadNextPage} />
             </>

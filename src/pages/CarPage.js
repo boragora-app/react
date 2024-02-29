@@ -151,7 +151,7 @@ export default function CarPage() {
               <p>Carro não encontrado.</p>
             :   
               <>
-                <h2>Manutenções | {car.brand} - {car.model} {car.year}</h2>
+                <h2>Manutenções | {car.brand} - {car.model} {car.year} ({car.mileage/1000} k Km)</h2>
                 {car.last_seen && 
                   <p>
                     Última manutenção: <TimeAgo isoDate={car.last_seen * 1000} />
@@ -223,7 +223,7 @@ export default function CarPage() {
                   </Container>
                   <Container>
                     <h3 style={{textAlign: "center" }}>Próximas</h3>
-                    <Repairs content={car.id} />
+                    <Repairs content={car.id} mileage={car.mileage} />
                   </Container>
                 </Container>
               </>
