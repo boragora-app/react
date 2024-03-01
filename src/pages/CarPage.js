@@ -24,6 +24,8 @@ export default function CarPage() {
   const [car, setCar] = useState();
   const api = useApi();
   const [formErrors, setFormErrors] = useState({});
+  const [action, setAction] = useState(['Nova', 'outline-success', 'Salvar Manutenção']);
+  const repairidField = useRef();
   const nameField = useRef();
   const mileageField = useRef();
   const intervalField = useRef();
@@ -63,10 +65,41 @@ export default function CarPage() {
     })();
   }, [carid, api]); //, loggedInCar]);
 
+  const copyRepair = (r => {
+    setAction(['Nova', 'outline-success', 'Salvar Manutenção'])
+    repairidField.current.value = ""
+    nameField.current.value = r.name || ""
+    mileageField.current.value = r.mileage || ""
+    intervalField.current.value = r.interval || ""
+    descField.current.value = r.desc || ""
+    valueField.current.value = r.value || ""
+  })
+  const editRepair = (r, n=false) => {
+    setAction(['Editar', 'outline-warning', 'Editar Reparo', 'true'])
+    // if (n) {
+    //   repairidField.current.value = ""
+    // } else {
+    repairidField.current.value = r.id
+    // }
+    nameField.current.value = r.name || ""
+    mileageField.current.value = r.mileage || ""
+    intervalField.current.value = r.interval || ""
+    descField.current.value = r.desc || ""
+    valueField.current.value = r.value || ""
+  };
 
-  const onSubmit = async (ev) => {
-    ev.preventDefault()
+  function handleCancel() {
+    setAction(['Nova', 'outline-success', 'Salvar Manutenção'])
+    repairidField.current.value = '';
+    nameField.current.value = '';
+    mileageField.current.value = '';
+    intervalField.current.value = '';
+    descField.current.value = '';
+    valueField.current.value = '';
+    nameField.current.focus();
+  }
 
+  const checkRepairForm = () => {
     const name = nameField.current.value
     const mileage = mileageField.current.value
     const interval = intervalField.current.value   
@@ -92,24 +125,34 @@ export default function CarPage() {
 
     setFormErrors(errors)
     if (Object.keys(errors).length > 0) {
-      return
+      return false
     }
-   
-    const result = await api.post('/repair', {
-      car: carid,
-      name: nameField.current.value,
-      mileage: mileageField.current.value,
-      interval: intervalField.current.value,
-      desc: descField.current.value,
-      value: valueField.current.value,
-    })
-    if (!result.ok) {
-      setFormErrors(result.body.errors.json)
-    } else {
-      setFormErrors({})
-      navigate(`/repair/${result.body.id}`)
-    }
+    return true
+  }
 
+  const onSubmit = async (ev) => {
+    ev.preventDefault()
+    if (checkRepairForm) {
+      try {
+        const result = await api.post('/repair', {
+          car: carid,
+          name: nameField.current.value,
+          mileage: mileageField.current.value,
+          interval: intervalField.current.value,
+          desc: descField.current.value,
+          value: valueField.current.value,
+        })
+        if (!result.ok) {
+          setFormErrors(result.body.errors.json)
+        } else {
+          setFormErrors({})
+          navigate(`/repair/${result.body.id}`)
+        }
+        // handleCancel();
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 
   // const edit = () => {
@@ -181,8 +224,12 @@ export default function CarPage() {
 
                 <Container className="PageCar">
                   <Container>
-                    <h3 style={{textAlign: "center" }}>Nova</h3>
+                    <h3 style={{textAlign: "center" }}>{action[0]}</h3>
                     <Form onSubmit={onSubmit}>
+                      <InputField
+                        name="id" label="ID" type="hidden"
+                        error={formErrors.repairid} fieldRef={repairidField}
+                      />
                       <InputField
                         name="name" label="Manutenção Realizada"
                         error={formErrors.name} fieldRef={nameField}
@@ -218,12 +265,13 @@ export default function CarPage() {
                           ref={descField}
                         />
                       </FloatingLabel>
-                      <Button style={{ display: 'flex', margin: '20px auto' }} variant="outline-success" type="submit">Salvar Manutenção</Button>
+                      <Button style={{ display: 'flex', margin: '20px auto' }} variant={action[1]} type="submit">{action[2]}</Button>
+                      {action[3] && <Button type="button" variant="outline-danger" onClick={handleCancel}>Cancelar</Button>}
                     </Form>
                   </Container>
                   <Container>
                     <h3 style={{textAlign: "center" }}>Próximas</h3>
-                    <Repairs content={car.id} mileage={car.mileage} />
+                    <Repairs content={car.id} mileage={car.mileage} editRepair={editRepair} copyRepair={copyRepair} />
                   </Container>
                 </Container>
               </>

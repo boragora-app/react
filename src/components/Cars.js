@@ -64,6 +64,19 @@ export default function Cars({ content, write }) {
     valueField.current.value = c.value || ""
   };
 
+  function handleCancel() {
+    setAction(['Novo', 'outline-success', 'Cadastrar Veículo'])
+    caridField.current.value = '';
+    licenseField.current.value = '';
+    brandField.current.value = '';
+    modelField.current.value = '';
+    yearField.current.value = '';
+    colorField.current.value = '';
+    mileageField.current.value = '';
+    valueField.current.value = '';
+    brandField.current.focus();
+  }
+
   const checkCarForm = () => {
     const errors = {};
   
@@ -96,19 +109,6 @@ export default function Cars({ content, write }) {
     return true
   }
 
-  function handleCancel() {
-    setAction(['Novo', 'outline-success', 'Cadastrar Veículo'])
-    caridField.current.value = '';
-    licenseField.current.value = '';
-    brandField.current.value = '';
-    modelField.current.value = '';
-    yearField.current.value = '';
-    colorField.current.value = '';
-    mileageField.current.value = '';
-    valueField.current.value = '';
-    brandField.current.focus();
-  }
-
   const onSubmit = async (event) => {
     event.preventDefault();
     if (checkCarForm) {
@@ -125,7 +125,6 @@ export default function Cars({ content, write }) {
         }
         setCar(carset)
         const data = await api.post('/car', car);
-  
         if (!data.ok) {
           flash(data.body.error, 'danger');
         } else {
@@ -205,7 +204,7 @@ export default function Cars({ content, write }) {
               <InputField
               name="mileage" label="Km" type="text"
               error={formErrors.mileage} fieldRef={mileageField} />
-            </Form.Group>
+            </Form.Group>''
             <Form.Group sm={3} as={Col}>
               <InputField
               name="value" label="Valor" type="text"

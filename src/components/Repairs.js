@@ -5,7 +5,7 @@ import Repair from './Repair';
 import More from './More';
 import Write from './Write';
 
-export default function Repairs({ content, mileage, write }) {
+export default function Repairs({ content, mileage, editRepair, copyRepair, write }) {
   const [repairs, setRepairs] = useState();
   const [pagination, setPagination] = useState();
   const api = useApi();
@@ -65,7 +65,7 @@ export default function Repairs({ content, mileage, write }) {
               {repairs.length === 0 ?
                 <p>Sem manutenções cadastradas.</p>
               :
-                repairs.map(repair => <Repair key={repair.id} repair={repair} mileage={mileage} />)
+                repairs.map(repair => <Repair key={repair.id} repair={repair} mileage={mileage} editRepair={editRepair} copyRepair={copyRepair}/>)
               }
               <More pagination={pagination} loadNextPage={loadNextPage} />
             </>
