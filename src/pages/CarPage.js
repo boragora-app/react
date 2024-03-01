@@ -71,7 +71,7 @@ export default function CarPage() {
     nameField.current.value = r.name || ""
     mileageField.current.value = r.mileage || ""
     intervalField.current.value = r.interval || ""
-    descField.current.value = r.desc || ""
+    setDescription(r.desc || "");
     valueField.current.value = r.value || ""
   })
   const editRepair = (r, n=false) => {
@@ -84,7 +84,7 @@ export default function CarPage() {
     nameField.current.value = r.name || ""
     mileageField.current.value = r.mileage || ""
     intervalField.current.value = r.interval || ""
-    descField.current.value = r.desc || ""
+    setDescription(r.desc || "");
     valueField.current.value = r.value || ""
   };
 
@@ -94,7 +94,7 @@ export default function CarPage() {
     nameField.current.value = '';
     mileageField.current.value = '';
     intervalField.current.value = '';
-    descField.current.value = '';
+    setDescription("");
     valueField.current.value = '';
     nameField.current.focus();
   }
@@ -136,6 +136,7 @@ export default function CarPage() {
       try {
         const result = await api.post('/repair', {
           car: carid,
+          id: repairidField.current.value,
           name: nameField.current.value,
           mileage: mileageField.current.value,
           interval: intervalField.current.value,
