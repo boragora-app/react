@@ -11,9 +11,9 @@ export default function Sidebar() {
       <Nav.Item>
         <Nav.Link as={NavLink} to="/cars" end>Carros</Nav.Link>
       </Nav.Item>
-      {/* <Nav.Item>
-        <Nav.Link as={NavLink} to="/finance" end>Finance</Nav.Link>
-      </Nav.Item> */}
+      <Nav.Item>
+        <Nav.Link as={NavLink} to="/services" end>Serviços</Nav.Link>
+      </Nav.Item>
       <Nav.Item>
         <Nav.Link as={NavLink} to="/feed">Feed</Nav.Link>
       </Nav.Item>

@@ -17,7 +17,7 @@ export default function Cars({ content, write }) {
   const [car, setCar] = useState();
   const [pagination, setPagination] = useState();
   const [formErrors, setFormErrors] = useState({});
-  const [action, setAction] = useState(['Novo', 'outline-success', 'Cadastrar Veículo']);
+  const [action, setAction] = useState(['Novo', 'outline-success', 'Cadastrar Veículo', 'true']);
   const api = useApi();
   const caridField = useRef();
   const licenseField = useRef();
@@ -65,7 +65,7 @@ export default function Cars({ content, write }) {
   };
 
   function handleCancel() {
-    setAction(['Novo', 'outline-success', 'Cadastrar Veículo'])
+    setAction(['Novo', 'outline-success', 'Cadastrar Veículo', 'true'])
     caridField.current.value = '';
     licenseField.current.value = '';
     brandField.current.value = '';

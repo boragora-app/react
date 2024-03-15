@@ -7,7 +7,7 @@ import FeedPage from './pages/FeedPage';
 
 import BookingPage from './pages/BookingPage';
 import ListCarPage from './pages/ListCarPage';
-// import FinancePage from './pages/FinancePage';
+import ServicesPage from './pages/ServicesPage';
 import CarPage from './pages/CarPage';
 import RepairPage from './pages/RepairPage';
 
@@ -51,7 +51,7 @@ export default function App() {
                       {/* <Route path="/" element={<FeedPage />} /> */}
                       <Route path="/booking" element={<BookingPage />} />
                       <Route path="/cars" element={<ListCarPage />} />
-                      {/* <Route path="/finance" element={<FinancePage />} /> */}
+                      <Route path="/services" element={<ServicesPage />} />
                       <Route path="/car/:carid" element={<CarPage />} />
                       <Route path="/repair/:repairid" element={<RepairPage />} />
                       <Route path="/feed" element={<FeedPage />} />
