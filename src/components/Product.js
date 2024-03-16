@@ -8,11 +8,10 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 // import { PincelSquare } from "react-icons/bs";
 
-export default memo(function Product({ product, editProduct }) {
+export default memo(function Product({ product, editProduct, copyProduct }) {
   return (
     <>
         <Stack direction="horizontal" gap={3} className="Product">
-
           <Link to={'/product/' + product.id} className="ProductLink">
             <>
               {product.name} | {product.value && 'R$' + product.value} {product.service || '(' + product.qtd + ')'}
@@ -31,7 +30,7 @@ export default memo(function Product({ product, editProduct }) {
                 </svg>
               </Button>
               <Button className="ms-auto" variant="outline-primary" onClick={() => copyProduct(product)}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4a90e2" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4a90e2" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
               </Button>
             </ButtonGroup>
           </div>

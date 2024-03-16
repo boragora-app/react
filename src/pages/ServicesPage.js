@@ -22,7 +22,7 @@ export default function ServicesPage() {
   return (
     <Body sidebar>
       <Breadcrumb />
-      <h2>Serviços Boragora</h2>
+      <h2>Serviços</h2>
       <Products content="list" />
       <hr style={{ backgroundColor: 'black', height: '3px', width: '100%', 'fillRule': 'evenodd' }} />
     </Body>

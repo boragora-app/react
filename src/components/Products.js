@@ -15,18 +15,18 @@ import Col from 'react-bootstrap/Col';
 
 export default function Products({ content, write }) {
   const [products, setProducts] = useState();
-  const [product, setProduct] = useState();
+  // const [product, setProduct] = useState();
   const [pagination, setPagination] = useState();
   const [formErrors, setFormErrors] = useState({});
-  const [action, setAction] = useState(['Novo', 'outline-success', 'Cadastrar Produto', 'true']);
+  const [action, setAction] = useState(['Novo Produto', 'outline-success', 'Cadastrar', 'true']);
   const api = useApi();
   const productidField = useRef();
   const nameField = useRef();
   const qtdField = useRef();
   const valueField = useRef();
-  const obsField = useRef();
   const publicField = useRef();
   const serviceField = useRef();
+  const obsField = useRef();
 
   let url;
   switch (content) {
@@ -48,9 +48,23 @@ export default function Products({ content, write }) {
     setProducts([newProduct, ...products]);
   };
 
+  const copyProduct = (p => {
+    setAction(['Novo Produto', 'outline-success', 'Cadastrar', 'true'])
+    productidField.current.value = ""
+
+    nameField.current.value = p.name || ""
+    qtdField.current.value = p.qtd || ""
+    valueField.current.value = p.value || ""
+    publicField.current.value = p.public || ""
+    serviceField.current.value = p.service || ""
+    obsField.current.value = p.obs || ""
+
+    // setDescription(r.desc || "");
+  })
+
   const editProduct = (p) => {
+    setAction(['Editar Produto', 'outline-warning', 'Editar', 'true'])
     productidField.current.value = p.id
-    setAction(['Editar', 'outline-warning', 'Editar Produto', 'true'])
 
     nameField.current.value = p.name || ""
     obsField.current.value = p.obs || ""
@@ -61,7 +75,7 @@ export default function Products({ content, write }) {
   };
 
   function handleCancel() {
-    setAction(['Novo', 'outline-success', 'Cadastrar Veículo', 'true'])
+    setAction(['Novo Produto', 'outline-success', 'Cadastrar', 'true'])
     productidField.current.value = '';
     nameField.current.value = '';
     obsField.current.value = '';
@@ -105,16 +119,15 @@ export default function Products({ content, write }) {
     event.preventDefault();
     if (checkProductForm) {
       try {
-        setProduct({
+        const data = await api.post('/product', {
           'id': productidField.current.value,
           'obs': obsField.current.value,
           'name': nameField.current.value,
-          'public': publicField.current.value,
-          'service': serviceField.current.value,
+          'public': publicField.current.checked,
+          'service': serviceField.current.checked,
           'qtd': qtdField.current.value,
           'value': valueField.current.value,
-        })
-        const data = await api.post('/product', product);
+        });
   
         if (!data.ok) {
           flash(data.body.error, 'danger');
@@ -131,7 +144,6 @@ export default function Products({ content, write }) {
       }
     }
   };
-  
 
   useEffect(() => {
     (async () => {
@@ -165,36 +177,42 @@ export default function Products({ content, write }) {
             <InputField
               name="id" label="ID" type="hidden"
               error={formErrors.productid} fieldRef={productidField} />
-            <Form.Group sm={4} as={Col}>
+            <Form.Group sm={6} as={Col}>
               <InputField
-                name="name"  label="Marca" type="text"
+                name="name"  label="Nome" type="text"
                 error={formErrors.name} fieldRef={nameField} />
             </Form.Group>
-            <Form.Group sm={3} as={Col}>
+            <Form.Group sm={2} as={Col}>
               <InputField
-              name="qtd" label="Km" type="text"
-              error={formErrors.qtd} fieldRef={qtdField} />
+                name="qtd" label="Qtd" type="number"
+                error={formErrors.qtd} fieldRef={qtdField} />
             </Form.Group>
-            <Form.Group sm={3} as={Col}>
+            <Form.Group sm={2} as={Col}>
               <InputField
-              name="value" label="Valor" type="text"
-              error={formErrors.value} fieldRef={valueField} />
+                name="value" label="Valor" type="number"
+                error={formErrors.value} fieldRef={valueField} />
+            </Form.Group>
+            <Form.Group sm={2} as={Col}>
+              <Form.Check
+                type="switch"
+                id="public"
+                label="Publicar"
+                error={formErrors.public}
+                ref={publicField}
+              />
+              <Form.Check
+                type="switch"
+                id="service"
+                label="Serviço"
+                error={formErrors.service}
+                ref={serviceField}
+              />
             </Form.Group>
           </Row>
           <Row className="mb-3">
-            <Form.Group sm={5} as={Col}>
+            <Form.Group sm={12} as={Col}>
               <InputField
-                name="public" label="Modelo" type="text"
-                error={formErrors.public} fieldRef={publicField} />
-            </Form.Group>
-            <Form.Group sm={3} as={Col}>
-              <InputField
-              name="service" label="Ano" type="text"
-              error={formErrors.service} fieldRef={serviceField} />
-            </Form.Group>
-            <Form.Group sm={3} as={Col}>
-              <InputField
-                name="obs" label="Placa" type="text"
+                name="obs" label="Observações" type="text"
                 error={formErrors.obs} fieldRef={obsField} />
             </Form.Group>
             <Form.Group style={{ textAlign: "center", margin: "20px" }}  sm={12} as={Col}>
@@ -217,7 +235,7 @@ export default function Products({ content, write }) {
                     {products.length === 0 ?
                       <p>Nenhum produto cadastrado.</p>
                     : 
-                      products.map(product => <Product key={product.id} product={product} editProduct={editProduct} />)
+                      products.map(product => <Product key={product.id} product={product} editProduct={editProduct} copyProduct={copyProduct} />)
                     }
                     <More pagination={pagination} loadNextPage={loadNextPage} />
                   </>

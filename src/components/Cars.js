@@ -14,7 +14,6 @@ import Col from 'react-bootstrap/Col';
 
 export default function Cars({ content, write }) {
   const [cars, setCars] = useState();
-  const [car, setCar] = useState();
   const [pagination, setPagination] = useState();
   const [formErrors, setFormErrors] = useState({});
   const [action, setAction] = useState(['Novo', 'outline-success', 'Cadastrar Veículo', 'true']);
@@ -113,7 +112,7 @@ export default function Cars({ content, write }) {
     event.preventDefault();
     if (checkCarForm) {
       try {
-        let carset = {
+        const data = await api.post('/car', {
           'id': caridField.current.value,
           'license': licenseField.current.value,
           'brand': brandField.current.value,
@@ -122,9 +121,7 @@ export default function Cars({ content, write }) {
           'color': colorField.current.value,
           'mileage': mileageField.current.value,
           'value': valueField.current.value,
-        }
-        setCar(carset)
-        const data = await api.post('/car', car);
+        });
         if (!data.ok) {
           flash(data.body.error, 'danger');
         } else {
