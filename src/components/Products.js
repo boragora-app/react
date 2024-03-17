@@ -15,7 +15,6 @@ import Col from 'react-bootstrap/Col';
 
 export default function Products({ content, write }) {
   const [products, setProducts] = useState();
-  // const [product, setProduct] = useState();
   const [pagination, setPagination] = useState();
   const [formErrors, setFormErrors] = useState({});
   const [action, setAction] = useState(['Novo Produto', 'outline-success', 'Cadastrar', 'true']);

@@ -3,7 +3,9 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 export default function InputField(
   { name, label, type, error, fieldRef }
 ) {
+
   return (
+    type === 'hidden' ?  <Form.Control type={type || 'text'} placeholder='' ref={fieldRef} /> :
     <FloatingLabel
       controlId={name}
       label={label}
