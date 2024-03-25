@@ -18,7 +18,7 @@ spec:
         fsGroup: 359
       containers:
         - name: react
-          image: registry.rcaldas.com/boragora/react:0.0.5
+          image: registry.rcaldas.com/boragora/react:0.1.1
           imagePullPolicy: Always
           command: ["npm", "start"]
           ports:
@@ -29,7 +29,7 @@ spec:
               cpu: "50m"
             limits:
               memory: "1400Mi"
-              cpu: "500m"
+              cpu: "800m"
           envFrom:
             - configMapRef:
                 name: boragora

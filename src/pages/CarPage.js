@@ -18,6 +18,14 @@ import Col from 'react-bootstrap/Col';
 // import { useUser } from '../contexts/UserProvider';
 // import { useFlash } from '../contexts/FlashProvider';
 
+const fileToBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+};
 
 export default function CarPage() {
   const { carid } = useParams();
@@ -31,6 +39,7 @@ export default function CarPage() {
   const intervalField = useRef();
   const descField = useRef(null);
   const valueField = useRef();
+  const fileField = useRef();
   // const flash = useFlash();
   const navigate = useNavigate();
   const [description, setDescription] = useState('');
@@ -39,6 +48,7 @@ export default function CarPage() {
     const { value } = event.target;
     setDescription(value);
   };
+
   useEffect(() => {
     (async () => {
       const response = await api.get('/car/' + carid);
@@ -74,6 +84,7 @@ export default function CarPage() {
     setDescription(r.desc || "");
     valueField.current.value = r.value || ""
   })
+
   const editRepair = (r, n=false) => {
     setAction(['Editar', 'outline-warning', 'Editar Reparo', 'true'])
     // if (n) {
@@ -132,9 +143,17 @@ export default function CarPage() {
 
   const onSubmit = async (ev) => {
     ev.preventDefault()
-    if (checkRepairForm) {
+    if (checkRepairForm()) {
       try {
-        const result = await api.post('/repair', {
+        const files = fileField.current.files;
+
+        const results = await Promise.all(Array.from(files).map(async (file) => {
+          const base64String = await fileToBase64(file);
+          const base64 = base64String.split(',')[1];
+          return { name: file.name, type: file.type, base64 };
+        }));
+        
+        const formData = {
           car: carid,
           id: repairidField.current.value,
           name: nameField.current.value,
@@ -142,7 +161,10 @@ export default function CarPage() {
           interval: intervalField.current.value,
           desc: descField.current.value,
           value: valueField.current.value,
-        })
+          files: results,
+        };
+
+        const result = await api.post('/repair', formData)
         if (!result.ok) {
           setFormErrors(result.body.errors.json)
         } else {
@@ -266,6 +288,12 @@ export default function CarPage() {
                           ref={descField}
                         />
                       </FloatingLabel>
+
+                      <Form.Group as={Col}>
+                        <Form.Label>Arquivos</Form.Label>
+                        <Form.Control type="file" ref={fileField} multiple />
+                      </Form.Group>
+
                       <Button style={{ display: 'flex', margin: '20px auto' }} variant={action[1]} type="submit">{action[2]}</Button>
                       {action[3] && <Button type="button" variant="outline-danger" onClick={handleCancel}>Cancelar</Button>}
                     </Form>

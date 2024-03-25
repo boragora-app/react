@@ -25,7 +25,6 @@ export default function RepairPage() {
       const response = await api.get('/repair/' + repairid);
       if (response.ok) {
         setRepair(response.body);
-
         // if (response.body.repairid !== loggedInRepair.repairid) {
         //   const follower = await api.get(
         //     '/me/following/' + response.body.id);
@@ -93,6 +92,7 @@ export default function RepairPage() {
                 <h5>
                   {repair.desc}
                 </h5>
+
               {/* <Container>
                 <Repairs content={repair.id} />
               </Container> */}
